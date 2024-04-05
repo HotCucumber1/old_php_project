@@ -29,11 +29,11 @@
     </div>
     <div class="form-group">
         <label for="email">Email:</label>
-        <input name="email" id="email" type="text" class="form-control">
+        <input name="email" id="email" type="email" class="form-control">
     </div>
     <div class="form-group">
         <label for="phone">Phone:</label>
-        <input name="phone" id="phone" type="text" class="form-control">
+        <input name="phone" id="phone" type="number" class="form-control">
     </div>
     <div class="form-group">
         <label for="avatar_path">Avatar:</label>

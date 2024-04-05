@@ -5,8 +5,7 @@ require './data/exceptions/DataBaseException.php';
 
 try {
     $controller = new UserController();
-    $controller->showUser($_GET);
-
+    $controller->index();
 }
 catch (DataBaseException $exception) {
     echo "ERROR: " . $exception->getMessage();

@@ -2,36 +2,19 @@
 
 class User
 {
-    /*private ?int $userId;
-    private string $firstName;
-    private string $lastName;
-    private string $middleName;
-    private string $gender;
-    private string $birthDate;
-    private string $email;
-    private string $phone;
-    private string $avatar_path;*/
+    private const DATETIME_FORMAT = 'Y-m-d H:i:s';
 
     public function __construct(private ?int $userId,
                                 private string $firstName,
                                 private string $lastName,
                                 private ?string $middleName,
                                 private string $gender,
-                                private string $birthDate,
+                                private ?string $birthDate,
+                                /*private DateTimeImmutable $birthDate,*/
                                 private string $email,
                                 private ?string $phone,
                                 private ?string $avatar_path)
     {
-        /*$this->userId = $userId;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->middleName = $middleName;
-        $this->gender = $gender;
-        $this->birthDate = $birthDate;
-        $this->email = $email;
-        $this->phone = $phone;
-        $this->avatar_path = $avatar_path;*/
-
     }
 
     /**
@@ -77,9 +60,9 @@ class User
     /**
      * @return string
      */
-    public function getBirthDate(): string
+    public function getBirthDate(): ?string
     {
-        return $this->birthDate;
+        return empty($this->birthDate) ? null : $this->birthDate;
     }
 
     /**
