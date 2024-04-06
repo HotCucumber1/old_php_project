@@ -1,4 +1,5 @@
 <?php
+
 require_once './src/model/UserTable.php';
 require_once './connection.php';
 require_once './data/exceptions/DataBaseException.php';
@@ -41,13 +42,18 @@ class UserController
 
             if ($last) {
                 $redirectUrl = "/show_user.php?user_id={$last}";
-                header('Location: ' . $redirectUrl, true, 303);
-                die();
+                $this->redirectToPage($redirectUrl);
             }
         }
         catch (DataBaseException $e) {
             throw new DataBaseException($e);
         }
+    }
+
+    private function redirectToPage(string $redirectUrl): void
+    {
+        header('Location: ' . $redirectUrl, true, 303);
+        die();
     }
 
     public function showUser(array $request): void

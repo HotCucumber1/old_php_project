@@ -10,8 +10,9 @@
                                                               margin-top: 100px;
                                                               width: 600px;
                                                               padding: 20px;
-                                                              border-radius: 5px;
+                                                              border-radius: 10px;
                                                               background-color: paleturquoise">
+    <h1>Login form</h1>
     <div class="form-group">
         <label for="name">Name:</label>
         <input name="name" id="name" type="text" class="form-control">

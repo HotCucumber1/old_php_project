@@ -46,7 +46,7 @@ class UserTable
             return (int)$this->connection->lastInsertId();
         }
         catch (Exception $exception) {
-            throw new DataBaseException("{$exception}");
+            throw new DataBaseException($exception->getMessage());
         }
     }
 
@@ -98,7 +98,7 @@ class UserTable
         );
     }
 
-    private function parseStringToDateTime(string $date): DateTimeImmutable
+    /*private function parseStringToDateTime(string $date): DateTimeImmutable
     {
         $result = DateTimeImmutable::createFromFormat(self::MYSQL_DATETIME_FORMAT, $date);
         if (!$result) {
@@ -110,5 +110,5 @@ class UserTable
     private function parseDateTimeToString(DateTimeImmutable $date): ?string
     {
         return $date?->format(self::MYSQL_DATETIME_FORMAT);
-    }
+    }*/
 }
