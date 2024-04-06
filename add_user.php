@@ -1,12 +1,5 @@
 <?php
 require_once './src/controller/UserController.php';
-require_once './data/exceptions/DataBaseException.php';  //exception
-require_once './src/model/User.php';
-require_once './src/model/UserTable.php';
-require_once './connection.php';
-require_once './data/exceptions/DataBaseException.php';
-
-
 
 /*try {
     $user = new User(
@@ -36,7 +29,6 @@ require_once './data/exceptions/DataBaseException.php';
 catch (DataBaseException $exception) {
     echo "ERROR: " . $exception->getMessage();
 }*/
-
 
 try {
     $controller = new UserController();

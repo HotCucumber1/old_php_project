@@ -1,10 +1,5 @@
 <?php
-require_once '../controller/UserController.php';
-require_once '../../data/exceptions/DataBaseException.php';
-require_once '../model/User.php';
-require_once '../model/UserTable.php';
-require_once '../../connection.php';
-require_once '../../data/exceptions/DataBaseException.php';
+//require_once '../../data/exceptions/DataBaseException.php';
 
 
 try {
