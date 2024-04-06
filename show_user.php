@@ -1,14 +1,13 @@
 <?php
-/*use controller\UserController;
 require_once './src/controller/UserController.php';
-require './data/exceptions/DataBaseException.php';*/
-require_once __DIR__ . '/src/model/User.php';
-require_once __DIR__ . '/src/model/UserTable.php';
-include 'connection.php';
-include __DIR__ . '/data/exceptions/DataBaseException.php';
+require_once './data/exceptions/DataBaseException.php';  //exception
+require_once './src/model/User.php';
+require_once './src/model/UserTable.php';
+require_once './connection.php';
+require_once './data/exceptions/DataBaseException.php';
 
 
-try {
+/*try {
     $connectionParams = getConnectionParams();
     $connection = connectDatabase($connectionParams);
     $table = new UserTable($connection);
@@ -26,10 +25,10 @@ try {
 }
 catch (DataBaseException $exception) {
     echo "ERROR: " . $exception->getMessage();
-}
+}*/
 
 
-/*
+
 try {
     $controller = new UserController();
     $controller->showUser($_GET);
@@ -38,4 +37,3 @@ try {
 catch (DataBaseException $exception) {
     echo "ERROR: " . $exception->getMessage();
 }
-*/

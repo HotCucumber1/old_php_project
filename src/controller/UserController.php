@@ -1,12 +1,7 @@
 <?php
-//namespace controller;
-use http\Exception\InvalidArgumentException;
-/*use UserTable;
-use User;*/
-
 require_once '../model/UserTable.php';
 require_once '../model/User.php';
-require_once 'connection.php';
+require_once '../../connection.php';
 require_once '../../data/exceptions/DataBaseException.php';
 
 class UserController
@@ -49,8 +44,9 @@ class UserController
     {
         $id = $request['id'] ?? null;
         if ($id === null)
-            throw new InvalidArgumentException('Parameter id is not defined');
+            throw new DataBaseException('Parameter userId is not defined');
         $user = $this->table->findUser($_GET['user_id']);
         require '../view/show_user_info.php';
+
     }
 }
