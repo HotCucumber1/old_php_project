@@ -1,8 +1,11 @@
 <?php
+namespace App\controller;
 
-require_once './src/model/UserTable.php';
-require_once './connection.php';
-require_once './data/exceptions/DataBaseException.php';
+use App\model\UserTable;
+use App\model\User;
+use App\exception\DataBaseException;
+use App\connection\ConnectionProvider;
+
 
 class UserController
 {
@@ -11,8 +14,8 @@ class UserController
     public function __construct()
     {
         try {
-            $connectionParams = getConnectionParams();
-            $connection = connectDatabase($connectionParams);
+            $connectionParams = ConnectionProvider::getConnectionParams();
+            $connection = ConnectionProvider::connectDatabase($connectionParams);
             $this->table = new UserTable($connection);
         }
         catch (DataBaseException $e) {

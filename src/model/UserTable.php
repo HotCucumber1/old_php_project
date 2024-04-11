@@ -1,5 +1,11 @@
 <?php
-require_once 'User.php';
+namespace App\model;
+
+use PDO;
+use App\exception\DataBaseException;
+
+// require_once 'User.php';
+
 
 class UserTable
 {
@@ -45,7 +51,7 @@ class UserTable
             ]);
             return (int)$this->connection->lastInsertId();
         }
-        catch (Exception $exception) {
+        catch (\Exception $exception) {
             throw new DataBaseException($exception->getMessage());
         }
     }
@@ -78,7 +84,7 @@ class UserTable
             }
             return null;
         }
-        catch (Exception $exception) {
+        catch (\Exception $exception) {
             throw new DataBaseException("{$exception}");
         }
     }
