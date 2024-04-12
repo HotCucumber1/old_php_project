@@ -7,7 +7,7 @@ use App\exceptions\DataBaseException;
 
 try {
     $controller = new UserController();
-    $controller->showUser($_GET);
+    $controller->updateUser($_GET, $_POST, $_FILES['avatar_path']);
 }
 catch (DataBaseException|\TypeError|\RuntimeException|\Exception $exception) {
     echo "ERROR: " . $exception->getMessage();

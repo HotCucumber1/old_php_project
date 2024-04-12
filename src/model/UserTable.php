@@ -89,6 +89,38 @@ class UserTable
         }
     }
 
+    public function updateUser(int $id, User $user): void
+    {
+        try {
+            $query = "UPDATE
+                        user
+                      SET
+                        first_name = :first_name,
+                        last_name = :last_name,
+                        middle_name = :middle_name,
+                        gender = :gender,
+                        birth_date = :birth_date,
+                        email = :email,
+                        phone = :phone
+                      WHERE
+                        user_id = :user_id;";
+            $request = $this->connection->prepare($query);
+            $request->execute([
+                ':first_name' => $user->getFirstName(),
+                ':last_name' => $user->getLastName(),
+                ':middle_name' => $user->getMiddleName(),
+                ':gender' => $user->getGender(),
+                ':birth_date' => $user->getBirthDate(),
+                ':email' => $user->getEmail(),
+                ':phone' => $user->getPhone(),
+                ':user_id' => $id
+            ]);
+        }
+        catch (\Exception $e) {
+            throw new DataBaseException($e);
+        }
+    }
+
     public function saveAvatarPathToDB(string $avatar, int $id): void
     {
         $query = "UPDATE

@@ -62,6 +62,36 @@ class UserController
         }
     }
 
+    public function updateUser(array $request, array $data, array $avatar): void
+    {
+        try
+        {
+            $id = $request['user_id'] ?? null;
+            if ($id === null)
+                throw new DataBaseException('Parameter userId is not defined');
+            $avatarPath = is_null($data['avatar_path']) ? "" : $data['avatar_path'];
+            $user = new User(
+                null,
+                $data['name'],
+                $data['last_name'],
+                $data['middle_name'],
+                $data['gender'],
+                $data['birth_date'],
+                $data['email'],
+                $data['phone'],
+                $avatarPath
+            );
+            $this->table->updateUser($id, $user);
+            $this->saveAvatar($avatar, $id);
+            $user = $this->table->findUser($id);
+            require './src/view/user_page.php';
+        }
+        catch (DataBaseException $e) {
+            throw new DataBaseException($e);
+        }
+
+    }
+
     private function redirectToPage(string $redirectUrl): void
     {
         header('Location: ' . $redirectUrl, true, 303);
@@ -71,21 +101,23 @@ class UserController
     private function saveAvatar(array $avatar, int $id): void
     {
         try {
-            $avatarDir = "./uploads/";
-            $avatarPath = $avatarDir . "{$id}" . basename($avatar['name']) ;
-            if ($avatar['type'] === 'image/png' ||
-                $avatar['type'] === 'image/jpeg' ||
-                $avatar['type'] === 'image/gif')
-            {
-                if (move_uploaded_file($avatar['tmp_name'], $avatarPath))
+            if ($avatar) {
+                $avatarDir = "./uploads/";
+                $avatarPath = $avatarDir . "{$id}" . basename($avatar['name']) ;
+                if ($avatar['type'] === 'image/png' ||
+                    $avatar['type'] === 'image/jpeg' ||
+                    $avatar['type'] === 'image/gif')
                 {
-                    $this->table->saveAvatarPathToDB($avatarPath, $id);
-                    return;
+                    if (move_uploaded_file($avatar['tmp_name'], $avatarPath))
+                    {
+                        $this->table->saveAvatarPathToDB($avatarPath, $id);
+                        return;
+                    }
+                    throw new RuntimeException('File was not saved');
                 }
-                throw new RuntimeException('File was not saved');
+                else
+                    throw new \TypeError("Wrong type of image");
             }
-            else
-                throw new \TypeError("Wrong type of image");
         }
         catch (\TypeError $e) {
             throw new \TypeError($e);
@@ -105,8 +137,8 @@ class UserController
             $id = $request['user_id'] ?? null;
             if ($id === null)
                 throw new DataBaseException('Parameter userId is not defined');
-            $user = $this->table->findUser($_GET['user_id']);
-            require './src/view/show_user_info.php';
+            $user = $this->table->findUser($id);
+            require './src/view/user_page.php';
         }
         catch (DataBaseException $e) {
             throw new DataBaseException($e);
