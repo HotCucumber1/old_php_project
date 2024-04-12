@@ -89,6 +89,21 @@ class UserTable
         }
     }
 
+    public function saveAvatarPathToDB(string $avatar, int $id): void
+    {
+        $query = "UPDATE
+                    user
+                  SET
+                    avatar_path = :avatar
+                  WHERE
+                    user_id = :id;";
+        $request = $this->connection->prepare($query);
+        $request->execute([
+            ':avatar' => $avatar,
+            ':id' => $id,
+        ]);
+    }
+
     private function createUser(array $user): User
     {
         return new User(

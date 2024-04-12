@@ -44,9 +44,9 @@ class UserController
                 $avatarPath
             );
             $last = $this->table->addUser($user);
-            $this->saveAvatar($avatar, $last);
 
             if ($last) {
+                $this->saveAvatar($avatar, $last);
                 $redirectUrl = "/show_user.php?user_id={$last}";
                 $this->redirectToPage($redirectUrl);
             }
@@ -78,13 +78,14 @@ class UserController
                 $avatar['type'] === 'image/gif')
             {
                 if (move_uploaded_file($avatar['tmp_name'], $avatarPath))
+                {
+                    $this->table->saveAvatarPathToDB($avatarPath, $id);
                     return;
+                }
                 throw new RuntimeException('File was not saved');
             }
-            else {
+            else
                 throw new \TypeError("Wrong type of image");
-            }
-
         }
         catch (\TypeError $e) {
             throw new \TypeError($e);
@@ -96,6 +97,7 @@ class UserController
             throw new DataBaseException($e);
         }
     }
+
 
     public function showUser(array $request): void
     {
