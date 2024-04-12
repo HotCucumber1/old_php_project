@@ -1,7 +1,7 @@
 <?php
 namespace App\connection;
 
-use App\exception\DataBaseException;
+use App\exceptions\DataBaseException;
 
 
 class ConnectionProvider {
@@ -18,7 +18,6 @@ class ConnectionProvider {
     static function connectDatabase(array $params): \PDO
     {
         try {
-
             return new \PDO($params['dsn'], $params['username'], $params['password']);
         }
         catch (\Exception $exception) {

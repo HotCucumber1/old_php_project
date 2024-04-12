@@ -1,8 +1,8 @@
 <?php
 namespace App\model;
 
-use PDO;
-use App\exception\DataBaseException;
+use App\exceptions\DataBaseException;
+
 
 // require_once 'User.php';
 
@@ -11,7 +11,7 @@ class UserTable
 {
     private const MYSQL_DATETIME_FORMAT = "Y-m-d H:i:s";
 
-    public function __construct(private PDO $connection)
+    public function __construct(private \PDO $connection)
     {
     }
 
@@ -78,7 +78,7 @@ class UserTable
                 ':user_id' => $userId
             ]);
 
-            $userData = $request->fetch(PDO::FETCH_ASSOC);
+            $userData = $request->fetch(\PDO::FETCH_ASSOC);
             if ($userData) {
                 return $this->createUser($userData);
             }

@@ -1,7 +1,7 @@
 <?php
 namespace App\model;
 use PDO;
-use App\exception\DataBaseException;
+use App\exceptions\DataBaseException;
 
 //require_once '../../config/config.php';
 

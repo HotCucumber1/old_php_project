@@ -6,7 +6,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-<form action="/add_user.php" method="post" role="form" style="margin-inline: auto;
+<form action="/add_user.php" method="post" enctype="multipart/form-data" role="form" style="margin-inline: auto;
                                                               margin-top: 100px;
                                                               width: 600px;
                                                               padding: 20px;
@@ -43,7 +43,8 @@
     </div>
     <div class="form-group">
         <label for="avatar_path">Avatar:</label>
-        <input name="avatar_path" id="avatar_path" type="text" class="form-control">
+        <input type="hidden" name="MAX_FILE_SIZE" value="30000000" />
+        <input name="avatar_path" id="avatar_path" type="file" accept="image/png, image/jpeg, image/gif" class="form-control">
     </div>
     <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Submit</button>
 </form>

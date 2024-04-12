@@ -3,8 +3,9 @@ namespace App\controller;
 
 use App\model\UserTable;
 use App\model\User;
-use App\exception\DataBaseException;
+use App\exceptions\DataBaseException;
 use App\connection\ConnectionProvider;
+use http\Exception\RuntimeException;
 
 
 class UserController
@@ -27,9 +28,10 @@ class UserController
         require './src/view/add_user_form.php';
     }
 
-    public function addNewUser(array $request): void
+    public function addNewUser(array $request, array $avatar): void
     {
         try {
+            $avatarPath = is_null($request['avatar_path']) ? "" : $request['avatar_path'];
             $user = new User(
                 null,
                 $request['name'],
@@ -39,14 +41,21 @@ class UserController
                 $request['birth_date'],
                 $request['email'],
                 $request['phone'],
-                $request['avatar_path']
+                $avatarPath
             );
             $last = $this->table->addUser($user);
+            $this->saveAvatar($avatar, $last);
 
             if ($last) {
                 $redirectUrl = "/show_user.php?user_id={$last}";
                 $this->redirectToPage($redirectUrl);
             }
+        }
+        catch (\TypeError $e) {
+            throw new \TypeError($e);
+        }
+        catch (RuntimeException $e) {
+            throw new RuntimeException($e);
         }
         catch (DataBaseException $e) {
             throw new DataBaseException($e);
@@ -57,6 +66,35 @@ class UserController
     {
         header('Location: ' . $redirectUrl, true, 303);
         die();
+    }
+
+    private function saveAvatar(array $avatar, int $id): void
+    {
+        try {
+            $avatarDir = "./uploads/";
+            $avatarPath = $avatarDir . "{$id}" . basename($avatar['name']) ;
+            if ($avatar['type'] === 'image/png' ||
+                $avatar['type'] === 'image/jpeg' ||
+                $avatar['type'] === 'image/gif')
+            {
+                if (move_uploaded_file($avatar['tmp_name'], $avatarPath))
+                    return;
+                throw new RuntimeException('File was not saved');
+            }
+            else {
+                throw new \TypeError("Wrong type of image");
+            }
+
+        }
+        catch (\TypeError $e) {
+            throw new \TypeError($e);
+        }
+        catch (RuntimeException $e) {
+            throw new RuntimeException($e);
+        }
+        catch (\Exception $e) {
+            throw new DataBaseException($e);
+        }
     }
 
     public function showUser(array $request): void

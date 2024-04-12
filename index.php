@@ -2,7 +2,7 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 use App\controller\UserController;
-use App\exception\DataBaseException;
+use App\exceptions\DataBaseException;
 
 
 try {

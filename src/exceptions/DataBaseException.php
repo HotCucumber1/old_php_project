@@ -1,4 +1,4 @@
 <?php
-namespace App\exception;
+namespace App\exceptions;
 
 class DataBaseException extends \Exception {}
