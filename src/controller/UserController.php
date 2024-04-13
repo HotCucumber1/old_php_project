@@ -89,7 +89,23 @@ class UserController
         catch (DataBaseException $e) {
             throw new DataBaseException($e);
         }
+    }
 
+    public function deleteUser(array $request): void
+    {
+        try
+        {
+            $id = $request['user_id'] ?? null;
+            if ($id === null)
+                throw new DataBaseException('Parameter userId is not defined');
+            $this->table->deleteUser($id);
+
+            $redirectUrl = "/delete_status.html";
+            $this->redirectToPage($redirectUrl);
+        }
+        catch (DataBaseException $e) {
+            throw new DataBaseException($e);
+        }
     }
 
     private function redirectToPage(string $redirectUrl): void
@@ -101,7 +117,7 @@ class UserController
     private function saveAvatar(array $avatar, int $id): void
     {
         try {
-            if ($avatar) {
+            if ($avatar['tmp_name'] != "") {
                 $avatarDir = "./uploads/";
                 $avatarPath = $avatarDir . "{$id}" . basename($avatar['name']) ;
                 if ($avatar['type'] === 'image/png' ||

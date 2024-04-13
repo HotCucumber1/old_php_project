@@ -45,9 +45,11 @@
             <label for="avatar_path">Avatar:</label>
             <input type="hidden" name="MAX_FILE_SIZE" value="30000000"/>
             <input name="avatar_path" id="avatar_path" type="file" accept="image/png, image/jpeg, image/gif" class="form-control">
+            <label for="avatar" style="display: block">Current avatar:</label>
+            <img id="avatar" src="<?= htmlentities($user->getAvatarPath()) ?>" alt="Avatar" style="height: 100px; width: 100px">
         </div>
         <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Update</button>
-        <button type="button" class="btn btn-primary" style="margin-top: 20px;">Delete</button>
+        <a href="/delete_user.php?user_id=<?= htmlentities($user->getUserId()) ?>">Delete this user</a>
     </form>
 </body>
 </html>

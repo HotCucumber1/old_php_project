@@ -121,6 +121,23 @@ class UserTable
         }
     }
 
+    public function deleteUser(int $id): void
+    {
+        try {
+            $query = "DELETE FROM
+                          user
+                      WHERE
+                          user_id = :user_id";
+            $request = $this->connection->prepare($query);
+            $request->execute([
+                ':user_id' => $id
+            ]);
+        }
+        catch (\Exception $e) {
+            throw new DataBaseException($e);
+        }
+    }
+
     public function saveAvatarPathToDB(string $avatar, int $id): void
     {
         $query = "UPDATE
