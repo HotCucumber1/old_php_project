@@ -49,7 +49,7 @@
             <img id="avatar" src="<?= htmlentities($user->getAvatarPath()) ?>" alt="Avatar" style="height: 100px; width: 100px">
         </div>
         <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Update</button>
-        <a href="/delete_user.php?user_id=<?= htmlentities($user->getUserId()) ?>">Delete this user</a>
+        <a href="/delete_user.php?user_id=<?= htmlentities($user->getUserId()) ?>" class="btn btn-primary" style="margin-top: 20px;">Delete this user</a>
     </form>
 </body>
 </html>

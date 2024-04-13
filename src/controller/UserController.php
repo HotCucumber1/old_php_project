@@ -5,7 +5,7 @@ use App\model\UserTable;
 use App\model\User;
 use App\exceptions\DataBaseException;
 use App\connection\ConnectionProvider;
-use http\Exception\RuntimeException;
+use \RuntimeException;
 
 
 class UserController
@@ -84,7 +84,10 @@ class UserController
             $this->table->updateUser($id, $user);
             $this->saveAvatar($avatar, $id);
             $user = $this->table->findUser($id);
-            require './src/view/user_page.php';
+            if (!is_null($user))
+                require './src/view/user_page.php';
+            else
+                echo "User not found";
         }
         catch (DataBaseException $e) {
             throw new DataBaseException($e);
@@ -100,7 +103,7 @@ class UserController
                 throw new DataBaseException('Parameter userId is not defined');
             $this->table->deleteUser($id);
 
-            $redirectUrl = "/delete_status.html";
+            $redirectUrl = "/src/view/delete_status.html";
             $this->redirectToPage($redirectUrl);
         }
         catch (DataBaseException $e) {
@@ -154,10 +157,24 @@ class UserController
             if ($id === null)
                 throw new DataBaseException('Parameter userId is not defined');
             $user = $this->table->findUser($id);
-            require './src/view/user_page.php';
+            if (!is_null($user))
+                require './src/view/user_page.php';
+            else
+                echo "User not found";
         }
         catch (DataBaseException $e) {
             throw new DataBaseException($e);
+        }
+    }
+
+    public function showAllUsers(): void
+    {
+        $users = $this->table->pullUsers();
+        if ($users) {
+            require './src/view/all_users_list.php';
+        }
+        else {
+            echo "Users not found";
         }
     }
 }

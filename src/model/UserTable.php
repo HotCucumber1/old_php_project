@@ -3,7 +3,6 @@ namespace App\model;
 
 use App\exceptions\DataBaseException;
 
-
 // require_once 'User.php';
 
 
@@ -87,6 +86,18 @@ class UserTable
         catch (\Exception $exception) {
             throw new DataBaseException("{$exception}");
         }
+    }
+
+    public function pullUsers(): array
+    {
+        $usersArray = [];
+        $query = "SELECT * FROM user";
+        $request = $this->connection->query($query);
+        $users = $request->fetch(\PDO::FETCH_ASSOC);
+        /*foreach ($users as $user) {
+
+        }*/
+        return [];
     }
 
     public function updateUser(int $id, User $user): void
