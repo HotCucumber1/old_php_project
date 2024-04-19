@@ -1,8 +1,8 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 
-use App\controller\UserController;
-use App\exceptions\DataBaseException;
+use App\Controller\UserController;
+use App\Exceptions\DataBaseException;
 
 
 try {

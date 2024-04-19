@@ -1,9 +1,5 @@
 <?php
-namespace App\model;
-
-use App\exceptions\DataBaseException;
-
-// require_once 'User.php';
+namespace App\Model;
 
 
 class UserTable
@@ -16,8 +12,7 @@ class UserTable
 
     public function addUser(User $user): int
     {
-        try {
-            $query = 'INSERT INTO 
+        $query = 'INSERT INTO 
                 `user` (
                         `first_name`, 
                         `last_name`, 
@@ -36,29 +31,24 @@ class UserTable
                       :email, 
                       :phone, 
                       :avatar_path);';
-            $request = $this->connection->prepare($query);
+        $request = $this->connection->prepare($query);
 
-            $request->execute([
-                ':first_name' => $user->getFirstName(),
-                ':last_name' => $user->getLastName(),
-                ':middle_name' => $user->getMiddleName(),
-                ':gender' => $user->getGender(),
-                ':birth_date' => $user->getBirthDate(),
-                ':email' => $user->getEmail(),
-                ':phone' => $user->getPhone(),
-                ':avatar_path' => $user->getAvatarPath(),
-            ]);
-            return (int)$this->connection->lastInsertId();
-        }
-        catch (\Exception $exception) {
-            throw new DataBaseException($exception->getMessage());
-        }
+        $request->execute([
+            ':first_name' => $user->getFirstName(),
+            ':last_name' => $user->getLastName(),
+            ':middle_name' => $user->getMiddleName(),
+            ':gender' => $user->getGender(),
+            ':birth_date' => $user->getBirthDate(),
+            ':email' => $user->getEmail(),
+            ':phone' => $user->getPhone(),
+            ':avatar_path' => $user->getAvatarPath(),
+        ]);
+        return (int)$this->connection->lastInsertId();
     }
 
     public function findUser(int $userId): ?User
     {
-        try {
-            $query = "SELECT 
+        $query = "SELECT 
                     `user_id`,
                     `first_name`, 
                     `last_name`, 
@@ -72,23 +62,19 @@ class UserTable
                       `user`
                   WHERE 
                       `user_id` = :user_id;";
-            $request = $this->connection->prepare($query);
-            $request->execute([
-                ':user_id' => $userId
-            ]);
+        $request = $this->connection->prepare($query);
+        $request->execute([
+            ':user_id' => $userId
+        ]);
 
-            $userData = $request->fetch(\PDO::FETCH_ASSOC);
-            if ($userData) {
-                return $this->createUser($userData);
-            }
-            return null;
+        $userData = $request->fetch(\PDO::FETCH_ASSOC);
+        if ($userData) {
+            return $this->createUser($userData);
         }
-        catch (\Exception $exception) {
-            throw new DataBaseException("{$exception}");
-        }
+        return null;
     }
 
-    public function pullUsers(): array
+    public function pullUsers(): array // change
     {
         $usersArray = [];
         $query = "SELECT * FROM user";
@@ -100,10 +86,9 @@ class UserTable
         return [];
     }
 
-    public function updateUser(int $id, User $user): void
+    public function updateUser(User $user): void
     {
-        try {
-            $query = "UPDATE
+        $query = "UPDATE
                         user
                       SET
                         first_name = :first_name,
@@ -115,38 +100,29 @@ class UserTable
                         phone = :phone
                       WHERE
                         user_id = :user_id;";
-            $request = $this->connection->prepare($query);
-            $request->execute([
-                ':first_name' => $user->getFirstName(),
-                ':last_name' => $user->getLastName(),
-                ':middle_name' => $user->getMiddleName(),
-                ':gender' => $user->getGender(),
-                ':birth_date' => $user->getBirthDate(),
-                ':email' => $user->getEmail(),
-                ':phone' => $user->getPhone(),
-                ':user_id' => $id
-            ]);
-        }
-        catch (\Exception $e) {
-            throw new DataBaseException($e);
-        }
+        $request = $this->connection->prepare($query);
+        $request->execute([
+            ':first_name' => $user->getFirstName(),
+            ':last_name' => $user->getLastName(),
+            ':middle_name' => $user->getMiddleName(),
+            ':gender' => $user->getGender(),
+            ':birth_date' => $user->getBirthDate(),
+            ':email' => $user->getEmail(),
+            ':phone' => $user->getPhone(),
+            ':user_id' => $user->getUserId()
+        ]);
     }
 
     public function deleteUser(int $id): void
     {
-        try {
-            $query = "DELETE FROM
+        $query = "DELETE FROM
                           user
                       WHERE
                           user_id = :user_id";
-            $request = $this->connection->prepare($query);
-            $request->execute([
-                ':user_id' => $id
-            ]);
-        }
-        catch (\Exception $e) {
-            throw new DataBaseException($e);
-        }
+        $request = $this->connection->prepare($query);
+        $request->execute([
+            ':user_id' => $id
+        ]);
     }
 
     public function saveAvatarPathToDB(string $avatar, int $id): void
@@ -164,7 +140,7 @@ class UserTable
         ]);
     }
 
-    private function createUser(array $user): User
+    private function createUser(array $user): User  // добавить валидацию
     {
         return new User(
             $user['user_id'],

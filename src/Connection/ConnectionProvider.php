@@ -1,10 +1,9 @@
 <?php
-namespace App\connection;
-
-use App\exceptions\DataBaseException;
+namespace App\Connection;
 
 
-class ConnectionProvider {
+class ConnectionProvider
+{
     static public function getConnectionParams(): array
     {
         require_once './config/config.php';
@@ -17,11 +16,6 @@ class ConnectionProvider {
 
     static function connectDatabase(array $params): \PDO
     {
-        try {
-            return new \PDO($params['dsn'], $params['username'], $params['password']);
-        }
-        catch (\Exception $exception) {
-            throw new DataBaseException("{$exception}");
-        }
+        return new \PDO($params['dsn'], $params['username'], $params['password']);
     }
 }

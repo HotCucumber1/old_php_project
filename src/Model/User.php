@@ -1,5 +1,5 @@
 <?php
-namespace App\model;
+namespace App\Model;
 
 class User
 {
@@ -43,9 +43,9 @@ class User
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMiddleName(): string
+    public function getMiddleName(): ?string
     {
         return $this->middleName;
     }
@@ -59,7 +59,7 @@ class User
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getBirthDate(): ?string
     {
@@ -75,18 +75,82 @@ class User
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPhone(): string
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getAvatarPath(): string
+    public function getAvatarPath(): ?string
     {
         return $this->avatar_path;
+    }
+
+    /**
+     * @param string $firstName
+     */
+    public function setFirstName(string $firstName): void
+    {
+        $this->firstName = $firstName;
+    }
+
+    /**
+     * @param string $lastName
+     */
+    public function setLastName(string $lastName): void
+    {
+        $this->lastName = $lastName;
+    }
+
+    /**
+     * @param string|null $middleName
+     */
+    public function setMiddleName(?string $middleName): void
+    {
+        $this->middleName = $middleName;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @param string|null $birthDate
+     */
+    public function setBirthDate(?string $birthDate): void
+    {
+        $this->birthDate = $birthDate;
+    }
+
+    /**
+     * @param string $gender
+     */
+    public function setGender(string $gender): void
+    {
+        $this->gender = $gender;
+    }
+
+    /**
+     * @param string|null $phone
+     */
+    public function setPhone(?string $phone): void
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * @param string|null $avatar_path
+     */
+    public function setAvatarPath(?string $avatar_path): void
+    {
+        $this->avatar_path = $avatar_path;
     }
 }
