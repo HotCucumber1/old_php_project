@@ -39,8 +39,8 @@ class UserController
             $request['gender'],
             $request['birth_date'],
             $request['email'],
-            ($request['phone'] == '') ? null : $request['phone'] == '',
-            ($request['avatar_path'] == '') ? null : $request['avatar_path'] == '',
+            ($request['phone'] == '') ? null : $request['phone'],
+            ($request['avatar_path'] == '') ? null : $request['avatar_path'],
         );
         $last = $this->table->addUser($user);
         if ($last) {
